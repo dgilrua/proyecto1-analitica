@@ -3,5 +3,5 @@ Proyecto #1 asignatura fundamentos de analítica
 
 ## descripcion detallada 
 
-##Integrantes:
+## Integrantes:
 - David Gil Rua : dgilr@unal.edu.co
