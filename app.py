@@ -2,6 +2,8 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import time
 import joblib
+import pandas as pd
+import numpy as np
 
 columns = ['person_income',
  'person_home_ownership',
@@ -88,7 +90,6 @@ def handle_click_send (arr):
   
 def handle_click_back ():
   st.session_state.clicked = False
-  st.session_state.saved_data = []
   
 st.title('Analisis de :blue[riesgo crediticio]')
 
@@ -114,7 +115,7 @@ if selected == 'Scorecard':
     
     col1, col2 = st.columns(2)
 
-    person_income = col1.number_input(':blue[Ingresa tus ganancias mensuales]', 0, 1000000, 0)
+    person_income = col1.number_input(':blue[Ingresa tus ganancias mensuales]', 0, 5000000, 0)
     
     person_home_ownership = col2.selectbox(':blue[Ingresa tu tipo de vivienda]', ['Hipotecada', 'Renta', 'Propia', 'Otros'], placeholder='Selecciona tu tipo de vivienda')  
     
@@ -129,7 +130,7 @@ if selected == 'Scorecard':
     
     loan_amnt = col2.number_input(':blue[Ingresa el monto del prestamo]', 0, 1000000, 0)
     
-    loan_percent_income = col1.number_input(':blue[Ingresa el porcentaje del prestamo]', 0, 100, 0)
+    loan_percent_income = col1.number_input(':blue[Ingresa el porcentaje de ganancia del prestamo]', 0.00, 100.00, 0.00, step=0.01)
     
     cb_person_default_on_file = col2.selectbox(':blue[Ingresa si tienes historial crediticio]', ['Si', 'No'], placeholder='Selecciona si tienes historial crediticio')
     
@@ -169,6 +170,7 @@ if selected == 'Scorecard':
   if st.session_state.clicked: 
     
     # Barra de progreso
+    st.empty()
     progress_bar = st.progress(0)
 
     for percent_complete in range(100):
@@ -227,16 +229,33 @@ if selected == 'Scorecard':
     
     person_home_ownership, loan_intent, loan_grade, cb_person_default_on_file, incomme_group, loan_group = datos[0]
     
-    scaler = joblib.load('scaler_min_max2.pkl')
+    values = np.array([person_income, person_home_ownership, person_emp_length, loan_intent, loan_grade, loan_amnt, loan_percent_income, cb_person_default_on_file, incomme_group, loan_group])
     
-    datos_escalados = scaler.transform([[person_income, person_home_ownership, person_emp_length, loan_intent, loan_grade, loan_amnt, loan_percent_income, cb_person_default_on_file, incomme_group, loan_group]])
+    Dataframe = pd.DataFrame(values.reshape(-1, len(values)), columns=columns)
     
-    print(datos)
-    print(datos_escalados)
+    model = joblib.load('scorecard_model.pkl')
+    
+    score = model.score(Dataframe)
+    
+    score = int(score[0])
+    
+    global_mean_score = 604
+    
+    st.title('Tu score es: ' + str(score))
+    
+    progress_bar = st.progress(0)
+    
+    progress_bar.progress(int((100/1000)*score))
+    
+    st.title('El score promedio de la poblacion es: ' + str(global_mean_score))
+    
+    progress_bar2 = st.progress(0)
+    
+    progress_bar2.progress(int((100/1000)*global_mean_score))
     
     boton = st.button('Regresar', type='primary', on_click=handle_click_back)
 
-  
+
 
   
 
