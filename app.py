@@ -5,6 +5,8 @@ import joblib
 import pandas as pd
 import numpy as np
 
+st.set_page_config(layout="wide")
+
 columns = ['person_income',
  'person_home_ownership',
  'person_emp_length',
@@ -37,13 +39,14 @@ st.markdown(
   .e1nzilvr1 {
     text-align: center;
   }
+  
   .css-1y4p8pa {
     width: 90%;
-    max-width: 120rem;
+    max-width: 1200rem;
   }
   
-  .e1nzilvr5 p{
-    font-size: 1.2rem;
+  .st-emotion-cache-16idsys p{
+    font-size: 1.1rem;
     margin-bottom: 0.5rem;
     font-weight: 600;
   }
@@ -63,14 +66,58 @@ st.markdown(
     align-items: center;
     background-color: #1E90FF;
     border: none;
-    margin-top: 60px;
+    margin-top: 30px;
   }
   
   .ef3psqc12:hover {
     background-color: #1773cd;
   }
   
-  </style>
+  .e115fcil1 {
+    margin: 0 auto;
+  }
+  
+  .nav-link-horizontal {
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+  
+  .st-emotion-cache-10oheav {
+    padding: 2rem 1rem;
+  }
+  
+  .st-emotion-cache-10oheav h1{
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .st-emotion-cache-1p1nwyz p {
+    font-weight: 400;
+  }
+  
+  .st-emotion-cache-1kyxreq img{
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+  
+  .st-emotion-cache-ul2nnp p {
+    font-weight: 400;
+  }
+  
+  .st-emotion-cache-ul2nnp p a{
+    background-color: transparent;
+    font weight: bold;
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  .st-emotion-cache-5rimss p{
+    line-height: 2.0; 
+    font-size: 1.1rem;
+    text-align: justify;
+  }
   """, unsafe_allow_html=True
 )
 
@@ -109,6 +156,8 @@ selected = option_menu(
 
 if selected == 'Scorecard':
   
+  
+  
   if st.session_state.clicked == False:
     
     # Formulario de ingreso de datos
@@ -132,7 +181,7 @@ if selected == 'Scorecard':
     
     loan_percent_income = col1.number_input(':blue[Ingresa el porcentaje de ganancia del prestamo]', 0.00, 100.00, 0.00, step=0.01)
     
-    cb_person_default_on_file = col2.selectbox(':blue[Ingresa si tienes historial crediticio]', ['Si', 'No'], placeholder='Selecciona si tienes historial crediticio')
+    cb_person_default_on_file = col2.selectbox(':blue[Ingresa si tienes historial de incumplimiento crediticio]', ['Si', 'No'], placeholder='Selecciona si tienes historial de incumplimiento crediticio')
     
     #Establecer rangos para la variable de ingresos y prestamos
     
@@ -239,26 +288,57 @@ if selected == 'Scorecard':
     
     score = int(score[0])
     
-    global_mean_score = 604
+    if cb_person_default_on_file == 1:
+      score = score - 40
+    
+    global_mean_score = 632
+    
+    st.image('score-crediticio.svg', width=800)
     
     st.title('Tu score es: ' + str(score))
     
     progress_bar = st.progress(0)
     
-    progress_bar.progress(int((100/1000)*score))
+    for i in range(int((100/850)*score)):
+      progress_bar.progress(i + 1)
+      time.sleep(0.001)
+    
+    time.sleep(0.4)  
     
     st.title('El score promedio de la poblacion es: ' + str(global_mean_score))
     
     progress_bar2 = st.progress(0)
     
-    progress_bar2.progress(int((100/1000)*global_mean_score))
+    for i in range(int((100/850)*global_mean_score)):
+      progress_bar2.progress(i + 1)
+      time.sleep(0.001)
+    
+    time.sleep(0.4)  
     
     boton = st.button('Regresar', type='primary', on_click=handle_click_back)
+    
+    st.toast('Para regresar presiona el boton!', icon='🎉')
+    
+    time.sleep(1)
+    
+    sidebar = st.sidebar
+    
+    sidebar.title('¿Que es el score crediticio?')
+    
+    sidebar.write('es una medida numérica que evalúa la solvencia crediticia de una persona o entidad. Este puntaje se utiliza para determinar la probabilidad de que un individuo o negocio pague sus deudas de manera oportuna. En otras palabras, el score crediticio es una herramienta que los prestamistas, como bancos y compañías de tarjetas de crédito, utilizan para evaluar el riesgo crediticio de un solicitante antes de aprobar una solicitud de préstamo o línea de crédito.')
+    
+    url = 'https://www.transunion.co/score-de-credito'
+    sidebar.write(f"[Para saber mas haz click aqui]({url})") 
 
-
-
+if selected == 'Video':
   
+  st.video('https://www.youtube.com/watch?v=H0rQc9yJlXk')
 
+if selected == 'Reporte':
+  col1, col2, col3 = st.columns([1,3,1])
+  
+  with open('Reporte_Tecnico/reporte.md', "r",encoding='UTF-8') as markdown_file:
+    col2.markdown(markdown_file.read(), unsafe_allow_html=True)
   
   
     
