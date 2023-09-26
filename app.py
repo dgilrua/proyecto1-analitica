@@ -118,6 +118,34 @@ st.markdown(
     font-size: 1.1rem;
     text-align: justify;
   }
+  
+  .st-emotion-cache-5rimss img{
+    width: auto;
+    max-width: 100%;
+  }
+  
+  .img_doc {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .img_doc_full {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .img_doc img {
+    width: 300px;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .img_doc_full img {
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+  }
+  
   """, unsafe_allow_html=True
 )
 

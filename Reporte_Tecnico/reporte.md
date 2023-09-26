@@ -67,11 +67,38 @@ Por otra parte, el dataset tiene un total de 32581 observaciones y 12 variables,
 
 <br>
 
+<div class='img_doc_full'>
+  <img src='https://imagizer.imageshack.com/img924/7342/AaQ2rF.png'>
+  <br>
+  <em>Fig 2. Descriptivos categoricos</em>
+</div>
+
+<br>
+
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/pmAie4QEp'>
+  <br>
+  <em>Fig 2. Descriptivos categoricos</em>
+</div>
+
+<br>
+<br>
+
 #### 2. **Limpieza de datos.**
 
 <br>
 
 Con el objetivo de asegurar la utilidad del análisis, se realiza un proceso de limpieza de datos. Inicialmente se obtiene la cantidad de valores nulos en cada variable con la siguiente tabla.
+
+<br>
+
+<div class='img_doc'>
+  <img src='https://imageshack.com/i/poMgQmbZp'>
+  <br>
+  <em>Fig 3. Cantidad valores nulos</em>
+</div>
+
+<br>
 
 Como el dataset tiene un total de 32581 datos y los datos nulos no superan el 10%, se considera mejor eliminar los datos con variables nulas en lugar de imputarlos. Además, se eliminan 137 observaciones duplicadas. Posteriormente, se analiza la distribución de las variables person\_income y loan\_amount.
 
