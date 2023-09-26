@@ -1,7 +1,11 @@
-# proyecto1-analitica
-Proyecto #1 asignatura fundamentos de analítica
+# Proyecto Fundamentos de Analitica #1
+Proyecto #1 asignatura fundamentos de analítica: Credit-Riks Score
 
-## descripcion detallada 
+## Descripcion detallada 
+
+
 
 ## Integrantes:
+- David López López: davlopezlo@unal.edu.co
+- Juan Carlos Múnera Arango: jumuneraa@unal.edu.co
 - David Gil Rua : dgilr@unal.edu.co
