@@ -5,6 +5,8 @@ import joblib
 import pandas as pd
 import numpy as np
 
+st.set_page_config(layout="wide")
+
 columns = ['person_income',
  'person_home_ownership',
  'person_emp_length',
@@ -43,8 +45,8 @@ st.markdown(
     max-width: 1200rem;
   }
   
-  .e1nzilvr5 p{
-    font-size: 1.2rem;
+  .st-emotion-cache-16idsys p{
+    font-size: 1.1rem;
     margin-bottom: 0.5rem;
     font-weight: 600;
   }
@@ -82,18 +84,39 @@ st.markdown(
   
   .st-emotion-cache-10oheav {
     padding: 2rem 1rem;
-    text-align: center;
-    font-weight: bold;
   }
   
   .st-emotion-cache-10oheav h1{
     font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .st-emotion-cache-1p1nwyz p {
+    font-weight: 400;
   }
   
   .st-emotion-cache-1kyxreq img{
     width: 100%;
     max-width: 90%;
     margin: 0 auto;
+  }
+  
+  .st-emotion-cache-ul2nnp p {
+    font-weight: 400;
+  }
+  
+  .st-emotion-cache-ul2nnp p a{
+    background-color: transparent;
+    font weight: bold;
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  .st-emotion-cache-5rimss p{
+    line-height: 2.0; 
+    font-size: 1.1rem;
+    text-align: justify;
   }
   """, unsafe_allow_html=True
 )
@@ -132,6 +155,8 @@ selected = option_menu(
 )
 
 if selected == 'Scorecard':
+  
+  
   
   if st.session_state.clicked == False:
     
@@ -287,20 +312,33 @@ if selected == 'Scorecard':
     for i in range(int((100/850)*global_mean_score)):
       progress_bar2.progress(i + 1)
       time.sleep(0.001)
-      
+    
     time.sleep(0.4)  
     
     boton = st.button('Regresar', type='primary', on_click=handle_click_back)
     
     st.toast('Para regresar presiona el boton!', icon='🎉')
-
+    
+    time.sleep(1)
+    
     sidebar = st.sidebar
     
     sidebar.title('¿Que es el score crediticio?')
     
+    sidebar.write('es una medida numérica que evalúa la solvencia crediticia de una persona o entidad. Este puntaje se utiliza para determinar la probabilidad de que un individuo o negocio pague sus deudas de manera oportuna. En otras palabras, el score crediticio es una herramienta que los prestamistas, como bancos y compañías de tarjetas de crédito, utilizan para evaluar el riesgo crediticio de un solicitante antes de aprobar una solicitud de préstamo o línea de crédito.')
+    
+    url = 'https://www.transunion.co/score-de-credito'
+    sidebar.write(f"[Para saber mas haz click aqui]({url})") 
 
+if selected == 'Video':
   
+  st.video('https://www.youtube.com/watch?v=H0rQc9yJlXk')
 
+if selected == 'Reporte':
+  col1, col2, col3 = st.columns([1,3,1])
+  
+  with open('Reporte_Tecnico/reporte.md', "r",encoding='UTF-8') as markdown_file:
+    col2.markdown(markdown_file.read(), unsafe_allow_html=True)
   
   
     
