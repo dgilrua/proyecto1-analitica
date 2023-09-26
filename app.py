@@ -37,9 +37,10 @@ st.markdown(
   .e1nzilvr1 {
     text-align: center;
   }
+  
   .css-1y4p8pa {
     width: 90%;
-    max-width: 120rem;
+    max-width: 1200rem;
   }
   
   .e1nzilvr5 p{
@@ -63,14 +64,37 @@ st.markdown(
     align-items: center;
     background-color: #1E90FF;
     border: none;
-    margin-top: 60px;
+    margin-top: 30px;
   }
   
   .ef3psqc12:hover {
     background-color: #1773cd;
   }
   
-  </style>
+  .e115fcil1 {
+    margin: 0 auto;
+  }
+  
+  .nav-link-horizontal {
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+  
+  .st-emotion-cache-10oheav {
+    padding: 2rem 1rem;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .st-emotion-cache-10oheav h1{
+    font-size: 2rem;
+  }
+  
+  .st-emotion-cache-1kyxreq img{
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+  }
   """, unsafe_allow_html=True
 )
 
@@ -132,7 +156,7 @@ if selected == 'Scorecard':
     
     loan_percent_income = col1.number_input(':blue[Ingresa el porcentaje de ganancia del prestamo]', 0.00, 100.00, 0.00, step=0.01)
     
-    cb_person_default_on_file = col2.selectbox(':blue[Ingresa si tienes historial crediticio]', ['Si', 'No'], placeholder='Selecciona si tienes historial crediticio')
+    cb_person_default_on_file = col2.selectbox(':blue[Ingresa si tienes historial de incumplimiento crediticio]', ['Si', 'No'], placeholder='Selecciona si tienes historial de incumplimiento crediticio')
     
     #Establecer rangos para la variable de ingresos y prestamos
     
@@ -239,23 +263,41 @@ if selected == 'Scorecard':
     
     score = int(score[0])
     
-    global_mean_score = 604
+    if cb_person_default_on_file == 1:
+      score = score - 40
+    
+    global_mean_score = 632
+    
+    st.image('score-crediticio.svg', width=800)
     
     st.title('Tu score es: ' + str(score))
     
     progress_bar = st.progress(0)
     
-    progress_bar.progress(int((100/1000)*score))
+    for i in range(int((100/850)*score)):
+      progress_bar.progress(i + 1)
+      time.sleep(0.001)
+    
+    time.sleep(0.4)  
     
     st.title('El score promedio de la poblacion es: ' + str(global_mean_score))
     
     progress_bar2 = st.progress(0)
     
-    progress_bar2.progress(int((100/1000)*global_mean_score))
+    for i in range(int((100/850)*global_mean_score)):
+      progress_bar2.progress(i + 1)
+      time.sleep(0.001)
+      
+    time.sleep(0.4)  
     
     boton = st.button('Regresar', type='primary', on_click=handle_click_back)
+    
+    st.toast('Para regresar presiona el boton!', icon='🎉')
 
-
+    sidebar = st.sidebar
+    
+    sidebar.title('¿Que es el score crediticio?')
+    
 
   
 
