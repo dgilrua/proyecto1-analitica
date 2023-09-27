@@ -365,22 +365,77 @@ Para esto busca identificar las características más importantes que predicen l
 
 <br>
 
-Estas características se pueden cuantificar en una variable llamada *Points*, la cual asigna un valor dependiendo de la caracteristica del usuario y como esta relaciona con la variable objetivo. Entre mejor sea esta relacion mas puntos seran asignados a la caracteristica en cuestion y entre menor sea la relacion menos puntos habrá 
+Estas características se pueden cuantificar en una variable llamada *Points*, la cual asigna un valor dependiendo de la caracteristica del usuario y como esta relaciona con la variable objetivo. Entre mejor sea esta relacion, mas puntos seran asignados a la caracteristica en cuestion y entre menor sea la relacion, menos puntos habrán. 
 
 <br>
 
+Gracias al scorecard, se pueden identificar cuales variables tienen un mayor peso en el posible riesgo a la hora de realizar un credito. Esto se puede ver en la asignacion de puntos en relacion a cada caracteristica; Si los puntos asignados son negativos esto significa que el riesgo de default es muy elevado.
+
+<div class='img_doc'>
+  <img src='https://imageshack.com/i/pmqt4dCWp'>
+  <br>
+  <em>Fig 22. Variables mas riesgosas</em>
+</div>
+
+<br>
+
+
 #### **Modelo**
 
-Se presenta a continuación la matriz de confusión asociada al modelo y las métricas arrojadas por el mismo.![](Aspose.Words.660d6141-9d24-4417-b3b8-487aa590e777.018.png)
+<br>
+
+Para el proyecto se decidio usar un  modelo de predicción basado en regresión logística, la cual es una técnica estadística que se utiliza para predecir la probabilidad de que una variable categórica binaria (por ejemplo, sí/no, verdadero/falso, éxito/fracaso) ocurra en función de una o más variables predictoras independientes. Esto debido a que la variable target en este caso (loan_status) tiene valores binarios de True o False, por lo que un metodo simple y optimo para predecir estos valores es el de regresion logistica
+
+<br>
+
+#### **Evaluacion del Modelo**
+
+<br>
+
+Se presenta a continuación la matriz de confusión asociada al modelo y las métricas arrojadas 
+
+<br>
+
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/pmPxJDj3p'>
+  <br>
+  <em>Fig 23. Matriz de confusion</em>
+</div>
+
+<br>
 
 El modelo presenta un accuracy de 0.847 aproximadamente, lo cual indica que acierta en promedio el 84.7% de las clasificaciones totales.
 
-![](Aspose.Words.660d6141-9d24-4417-b3b8-487aa590e777.019.png)
-
 Además, tiene una precisión aproximada de 0.734, indicando que el porcentaje de acierto de la clase de default es de 73,4%. También tiene un altísimo nivel de recall, indicando que el modelo clasifica correctamente el 95.3% de todos los clientes default.
 
-![](Aspose.Words.660d6141-9d24-4417-b3b8-487aa590e777.020.png) ![](Aspose.Words.660d6141-9d24-4417-b3b8-487aa590e777.021.png)
+Finalmente, la métrica del F1-Score es de 0.829 mostrando un rendimiento bastante acertado para predecir clases por parte del modelo.
 
-Finalmente, la métrica del f1\_score es de 0.829 mostrando un rendimiento bastante acertado para predecir clases por parte del modelo.![](Aspose.Words.660d6141-9d24-4417-b3b8-487aa590e777.022.png)
+#### *Curva ROC*
 
-Curva ROC
+<br>
+
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/pmpx72jfp'>
+  <br>
+  <em>Fig 24. Curva ROC</em>
+</div>
+
+<br>
+
+El área debajo de la curva ROC representa la probabilidad de que el resultado del modelo para un caso positivo elegido aleatoriamente supere el resultado para un caso negativo elegido aleatoriamente. En nuestro caso podemos ver que esa área es de 0.86 o 86% lo cual es un valor bastante bueno.
+
+Finalmente, se puede determinar en la realización del modelo que hay variables de gran influencia sobre la probabilidad de impago, algunas de ellas son loan_percent_income, loan_grade y person_income. Así, podemos concluir que algunos de los factores diferenciales en la probabilidad de impago son el salario del aspirante, el grado del crédito y la relación entre el monto de la deuda y el salario. 
+
+#### *Referencias*
+
+<br>
+
+1. Gopidurgaprasad. (2022). AMEX : Credit Score Model 💳. Kaggle. https://www.kaggle.com/code/gopidurgaprasad/amex-credit-score-model#Weight-of-Evidence(WOE)
+
+<br>
+
+2. Gonçalves, G. D. S. (2022, 7 enero). Developing scorecards in Python using OptBinning - towards data science. Medium. https://towardsdatascience.com/developing-scorecards-in-python-using-optbinning-ab9a205e1f69
+
+<br>
+
+3. Maklin, C. (2022, 10 mayo). Metrics for evaluating machine learning classification models. Medium. https://towardsdatascience.com/metrics-for-evaluating-machine-learning-classification-models-python-example-59b905e079a5
