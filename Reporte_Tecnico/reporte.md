@@ -100,13 +100,79 @@ Con el objetivo de asegurar la utilidad del análisis, se realiza un proceso de 
 
 <br>
 
-Como el dataset tiene un total de 32581 datos y los datos nulos no superan el 10%, se considera mejor eliminar los datos con variables nulas en lugar de imputarlos. Además, se eliminan 137 observaciones duplicadas. Posteriormente, se analiza la distribución de las variables person\_income y loan\_amount.
+Como el dataset tiene un total de 32581 datos y los datos nulos no superan el 10%, se considera mejor eliminar los datos con variables nulas en lugar de imputarlos. Además, se eliminan 137 observaciones duplicadas. Posteriormente, se analiza la distribución de las variables person\_income, person\_age, person\_emp\_length y loan\_amount.
 
-También se realiza un análisis de Boxplots con las variables person\_age y person\_emp\_length en busca de outliers.
+<br>
 
-En el Boxplot de la variable person\_age se identifican valores extremos, por lo que se decide eliminar aquellos mayores a 60.
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/poZPW99tp'>
+  <br>
+  <em>Fig 4. Distribucion variable person_age</em>
+</div>
 
-Análogamente se realiza para la variable person\_emp\_length, donde se eliminan los valores mayores a 30.
+<br>
+
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/pmz4k45bp'>
+  <br>
+  <em>Fig 5. Distribucion variable loan_amnt</em>
+</div>
+
+<br>
+
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/poZzGBAdp'>
+  <br>
+  <em>Fig 6. Distribucion variable person_emp_length</em>
+</div>
+
+<br>
+
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/po397d17p'>
+  <br>
+  <em>Fig 7. Distribucion variable person_income</em>
+</div>
+
+<br>
+
+Ademas se realiza un análisis de Boxplots con las variables person\_income, person\_age, person\_emp\_length y loan\_amount en busca de outliers.
+
+<br>
+
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/pm1MPu2cp'>
+  <br>
+  <em>Fig 8. BoxPlot variable person_age</em>
+</div>
+
+<br>
+
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/pnBtPiDrp'>
+  <br>
+  <em>Fig 9. BoxPlot variable loan_amnt</em>
+</div>
+
+<br>
+
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/pmVBVqtqp'>
+  <br>
+  <em>Fig 10. BoxPlot variable person_emp_length</em>
+</div>
+
+<br>
+
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/pnMDMg2ip'>
+  <br>
+  <em>Fig 11. BoxPlot variable person_income</em>
+</div>
+
+<br>
+
+En cada una de las graficas anteriores se identifican valores extremos, por lo que se deciden eliminar los datos superiores a cierto valor de las variables person\_age (valores mayor a 60 años) y person\_emp\_length (valores mayor a 40 años), esto debido a la anormalidad de estos datos en el contexto actual. 
 
 <br>
 
@@ -135,9 +201,25 @@ Se realiza la discretización de las variables person\_age, person\_income y loa
 
 Posteriormente, se aplica un encoder a las variables categóricas en una copia del dataset para convertirlas en variables numéricas y poder realizar el análisis de correlaciones.
 
-![](Aspose.Words.660d6141-9d24-4417-b3b8-487aa590e777.009.png)![](Aspose.Words.660d6141-9d24-4417-b3b8-487aa590e777.010.png)
+<br>
 
-Se verifica que el encoder se aplicó correctamente con la imagen anterior, donde se muestran los 5 primeros datos del dataframe y todas las variables con información de tipo numérico, y se procede a escalar el data.frame con un escalamiento MinMax. Se escogió este tipo de escalamiento en lugar del escalamiento estándar, porque este último se ve afectado por valores atípicos, y como hay una cantidad considerable de ellos.
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/po9kcSvup'>
+  <br>
+  <em>Fig 12. Dataset escalado pt.1</em>
+</div>
+
+<br>
+
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/pmzXgWahp'>
+  <br>
+  <em>Fig 13. Dataset escalado pt.2</em>
+</div>
+
+<br>
+
+Se verifica que el encoder se aplicó correctamente con las imagenes anteriores, donde se muestran los 5 primeros datos del dataframe y todas las variables con información de tipo numérico, y se procede a escalar el data.frame con un escalamiento MinMax. Se escogió este tipo de escalamiento en lugar del escalamiento estándar, porque este último se ve afectado por valores atípicos, y como hay una cantidad considerable de ellos.
 
 <br>
 
@@ -147,58 +229,147 @@ Se verifica que el encoder se aplicó correctamente con la imagen anterior, dond
 
 Posteriormente se hace uso de diversas estrategias como la matriz de correlaciones, pruebas chi cuadrado, test ANOVA, análisis WoE y IV para escoger las variables estadísticamente significativas y evitar problemas de multicolinealidad en el modelo. A continuación se presenta la matriz de correlaciones entre las variables:
 
-![](Aspose.Words.660d6141-9d24-4417-b3b8-487aa590e777.011.png)
+<br>
 
-**Test de hipótesis de independencia chi cuadrado**
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/pmtDuwJpp'>
+  <br>
+  <em>Fig 14. Matriz Correlacion</em>
+</div>
 
-La prueba de hipótesis de independencia chi cuadrado, permite evaluar la independencia de las variables categóricas con el siguiente juego de hipótesis:
+<br>
+<br>
 
-h0: La variable categórica es dependiente. (Vp > alpha)
+##### **Test de hipótesis de relevancia chi cuadrado**
 
-h1: La variable categórica es independiente. (Vp < alpha)
+<br>
 
-![](Aspose.Words.660d6141-9d24-4417-b3b8-487aa590e777.012.png)
+La prueba de hipótesis de relevancia chi cuadrado, permite evaluar la relevancia de las variables categóricas con el siguiente juego de hipótesis:
 
-Se puede apreciar que la única variable que no rechaza la hipótesis nula que indica dependencia estadística, es la variable cb\_person\_cred\_hist\_length, la cual hace referencia a los años de historial crediticio que tiene la persona.
+> $h_0$: La variable categórica es irrelevante. (Vp > alpha)
 
-**Test ANOVA**
+> $h_1$: La variable categórica es relevante. (Vp < alpha)
+
+<br>
+
+<div class='img_doc'>
+  <img src='https://imageshack.com/i/pn4G3CfPp'>
+  <br>
+  <em>Fig 15. Tabla Chi2</em>
+</div>
+
+<br>
+
+Se puede apreciar que la única variable que no rechaza la hipótesis nula que indica irrelevancia estadística, es la variable cb\_person\_cred\_hist\_length, la cual hace referencia a los años de historial crediticio que tiene la persona.
+
+<br>
+
+##### **Test de hipótesis de relevancia ANOVA**
+
+<br>
 
 También se realizó un test ANOVA para cada variable continua, cuyos resultados fueron
 
-![](Aspose.Words.660d6141-9d24-4417-b3b8-487aa590e777.013.png)
+<br>
+
+<div class='img_doc'>
+  <img src='https://imageshack.com/i/pm6ZdUmHp'>
+  <br>
+  <em>Fig 16. Tabla ANOVA</em>
+</div>
+
+<br>
 
 De esta manera, como los Vp son tan pequeños, se acepta la significancia estadística de todas las variables continuas.
 
-**Weight of Evidence (WoE) y Information Value (IV)**
+<br>
+
+#### **Weight of Evidence (WoE) e Information Value (IV)**
+
+<br>
 
 Finalmente, se toma el criterio de Information Value como decisor para escoger las variables a tener en cuenta para la elaboración del modelo. A continuación se presentan las fórmulas para conseguir este resultado y se considerarán las variables cuyo IV sea superior a 0.02.
 
-WoE =ln(% Buenos clientes% Malos clientes)  	IV = (%non\_events - %events)\*WoE
+<div class='img_doc'>
+  <img src='https://imageshack.com/i/pmE90ipjp'>
+  <br>
+  <em>Fig 17. Formula calculo Woe</em>
+</div>
 
-![](Aspose.Words.660d6141-9d24-4417-b3b8-487aa590e777.014.png)
+<br>
 
-![](Aspose.Words.660d6141-9d24-4417-b3b8-487aa590e777.015.png)![](Aspose.Words.660d6141-9d24-4417-b3b8-487aa590e777.016.png)
+<div class='img_doc'>
+  <img src='https://imageshack.com/i/pmfhrVxxp'>
+  <br>
+  <em>Fig 18. Formula calculo IV</em>
+</div>
 
-Revisando las variables loan\_grade y loan\_int\_rate en la figura X, se encuentra un grado de correlación de 0.93, por lo cual se decide eliminar la variable con menor *Information Value,* correspondiente a loan\_int\_rate como se aprecia en la imagen siguiente.
+<br>
 
-![](Aspose.Words.660d6141-9d24-4417-b3b8-487aa590e777.017.png)
+Con estas formulas se hizo un calculo general para cada una de las variables y poder filtrar aquellas que tengan un IV superior a 0.02.
+
+<br>
+
+<div class='img_doc'>
+  <img src='https://imageshack.com/i/pmbqGXmlp'>
+  <br>
+  <em>Fig 19. Calculo IV para cada variable</em>
+</div>
+
+<br>
+
+Ademas se realiza un calculo de colinealidad entre todas las variables para verificar cuales de estas tiene un alto valor
+
+<br>
+
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/pnDL2qWLp'>
+  <br>
+  <em>Fig 20. Analisis colinealidad</em>
+</div>
+
+<br>
+
+Revisando las variables loan\_grade y loan\_int\_rate en la figura anterior, se encuentra un grado de correlación de 0.93, por lo cual se decide eliminar la variable con menor *Information Value,* correspondiente a loan\_int\_rate como se aprecia en la imagen anterior.
 
 De esta manera, se toman las variables mencionadas a continuación para el entrenamiento del modelo:
 
-1. loan\_percent\_income: relación entre el crédito y el salario
-1. loan\_grade: grado de clasificación del crédito
-1. person\_income: salario anual de la persona
-1. income\_group: grupo de clasificación al que pertenece el salario
-1. person\_home\_ownership: estado de la casa (propia, rentada, hipotecada)
-1. cb\_person\_default\_on\_file: ha hecho default antes?
-1. loan\_amnt: monto del crédito-
-1. loan\_intent: intención del crédito.
-1. loan\_group: clasificación del monto del crédito
-1. person\_emp\_length: duración de años laborando
+> 1. loan\_percent\_income: relación entre el crédito y el salario
+> 1. loan\_grade: grado de clasificación del crédito
+> 1. person\_income: salario anual de la persona
+> 1. income\_group: grupo de clasificación al que pertenece el salario
+> 1. person\_home\_ownership: estado de la casa (propia, rentada, hipotecada)
+> 1. cb\_person\_default\_on\_file: ha hecho default antes?
+> 1. loan\_amnt: monto del crédito-
+> 1. loan\_intent: intención del crédito.
+> 1. loan\_group: clasificación del monto del crédito
+> 1. person\_emp\_length: duración de años laborando
 
-**Scorecard**
+<br>
 
-**Modelo**
+#### **Scorecard**
+
+<br>
+
+Un puntaje crediticio, en el contexto financiero, es un modelo estadístico utilizado para evaluar la solvencia crediticia de individuos o entidades. Asigna una puntuación numérica para evaluar la probabilidad de que un prestatario reembolse sus deudas a tiempo.
+
+Para esto busca identificar las características más importantes que predicen la solvencia crediticia y crea un modelo que genera un puntaje según su predicción.
+
+<br>
+
+<div class='img_doc_full'>
+  <img src='https://imageshack.com/i/pmMWEudpp'>
+  <br>
+  <em>Fig 21. Scorecard query variable income_group</em>
+</div>
+
+<br>
+
+Estas características se pueden cuantificar en una variable llamada *Points*, la cual asigna un valor dependiendo de la caracteristica del usuario y como esta relaciona con la variable objetivo. Entre mejor sea esta relacion mas puntos seran asignados a la caracteristica en cuestion y entre menor sea la relacion menos puntos habrá 
+
+<br>
+
+#### **Modelo**
 
 Se presenta a continuación la matriz de confusión asociada al modelo y las métricas arrojadas por el mismo.![](Aspose.Words.660d6141-9d24-4417-b3b8-487aa590e777.018.png)
 
